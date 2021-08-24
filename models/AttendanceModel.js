@@ -3,8 +3,7 @@ const Schema = mongoose.Schema;
 
 const AttendanceSchema = new Schema(
   {
-
-    user: { type: Schema.Types.ObjectId, ref: "User" },
+    user: {type:Schema.Types.ObjectId, ref:"User"},
 
     profilePicUrl: { type: String },
 

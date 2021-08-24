@@ -20,7 +20,11 @@ MyApp.getInitialProps = async ({Component, ctx}) => {
   let pageProps = {}
 
   const protectedRoutes = ctx.pathname === "/dashboard" || 
-  ctx.pathname === "/kartu" || ctx.pathname === "/attendance" || ctx.pathname === "/users"
+  ctx.pathname === "/attendance" ||
+   ctx.pathname === "/dashboard/kartu" ||
+   ctx.pathname === "/dashboard/user" ||
+   ctx.pathname === "/dashboard/user/add-user"
+
 
   if(!token){
     destroyCookie(ctx,"token");

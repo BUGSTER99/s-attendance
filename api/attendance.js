@@ -5,31 +5,29 @@ const AttendanceModel=require('../models/AttendanceModel')
 const jwt=require('jsonwebtoken')
 
 
-router.get('/:rfidtag',async(req,res)=>{
-    const {rfidtag}=req.params
+router.post('/',async(req,res)=>{
+    const rfidtag=req.body.rfid
 try{
     const users = await UserModel.findOne({rfid:rfidtag});
     if(!users){
         return res.status(401).send("RFID tidak terdaftar"); 
     }
-
-    const {name} = users;
-
     try{
+        const user = users._id;
+        const keterangan = "masuk";
+        const status = "masuk";
         let attendance;
         attendance = new AttendanceModel({
-            name
+            user,
+            keterangan,
+            status,
         });
         await attendance.save();
+        return res.status(200).send("Berhasil Absen");
     }catch(error){
         console.error(error);
         return res.status(500).send('Server Error');
     }
-    const payload={userId:users._id}
-    jwt.sign(payload,process.env.jwtSecret,{expiresIn:"2d"},(err,token)=>{
-        if(err)throw err;
-        res.status(200).json("Berhasil Absen");
-    })  
 } catch(error){
     console.error(error);
     return res.status(500).send('Server Error');
