@@ -13,7 +13,7 @@ router.get('/',authMiddleware, async (req,res) => {
         const user=await UserModel.findById(userId);
         return res.status(200).json({user});
     } catch (error) {
-        consoele.error(error);
+        console.error(error);
         return res.status(500).send('Server Error');
     }
 });

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef} from "react";
 import { Grid, Header, Segment, Message,Container } from "semantic-ui-react";
 
 function Attendance({user}){    
-    const name = "-";
+    let name = "-";
    if(user){
         name = user.name
     } 

@@ -28,7 +28,7 @@ try{
     const payload={userId:users._id}
     jwt.sign(payload,process.env.jwtSecret,{expiresIn:"2d"},(err,token)=>{
         if(err)throw err;
-        res.status(200).json(token);
+        res.status(200).json("Berhasil Absen");
     })  
 } catch(error){
     console.error(error);

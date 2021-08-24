@@ -20,24 +20,26 @@ MyApp.getInitialProps = async ({Component, ctx}) => {
   let pageProps = {}
 
   const protectedRoutes = ctx.pathname === "/dashboard" || 
-  ctx.pathname === "/signup" || ctx.pathname === "/attendance"
+  ctx.pathname === "/kartu" || ctx.pathname === "/attendance" || ctx.pathname === "/users"
 
   if(!token){
+    destroyCookie(ctx,"token");
     protectedRoutes && redirectUser(ctx, "/login");
   } else {
     if(Component.getInitialProps){
       pageProps = await Component.getInitialProps(ctx);
     }
     try {
-      
-      const res=await axios.get(`${baseUrl}/api/auth`,{headers:{Authorization:token}});
+      const res=await axios.get(`${baseUrl}/api/auth`,{
+        headers:{Authorization:token
+        }});
       const { user }=res.data
       if(user) !protectedRoutes && redirectUser(ctx,"/dashboard");
       pageProps.user = user;
     } catch (error) {
       console.error(error);
-      destroyCookie(ctx,'token');
-      redirectUser(ctx,'/login');
+      destroyCookie(ctx,"token");
+      redirectUser(ctx,"/login");
     }
   }
   return {pageProps};  
